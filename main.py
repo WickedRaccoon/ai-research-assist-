@@ -1,18 +1,23 @@
-import httpx
-import asyncio
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-async def get_posts():
-    async with httpx.AsyncClient() as client:
-        res = await client.get("https://jsonplaceholder.typicode.com/posts")
-        return res.json()
+from services.ai import ask_ai
 
-async def main():
-    posts = await get_posts()
-    for post in posts[:5]:
-        
-    
-    titles = [p["title"] for p in posts if p["userId"] == 1]
-    for t in titles[:5]:
-        print(t)
+app = FastAPI()
 
-asyncio.run(main())
+
+class ResearchRequest(BaseModel):
+    query: str
+
+
+@app.get("/")
+async def root():
+    return {"message": "AI Research Assistant API"}
+
+
+@app.post("/research")
+async def research(data: ResearchRequest):
+
+    result = await ask_ai(data.query)
+
+    return result
