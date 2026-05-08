@@ -1,0 +1,21 @@
+# AI Research API
+
+Async backend service built with FastAPI.
+
+## Features
+- REST API
+- Async endpoints
+- Research endpoint
+- JSON request/response
+
+## Stack
+- Python
+- FastAPI
+- httpx
+- asyncio
+
+## Run
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload
